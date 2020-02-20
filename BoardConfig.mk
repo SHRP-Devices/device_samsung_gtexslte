@@ -1,4 +1,4 @@
-	USE_CAMERA_STUB := true
+USE_CAMERA_STUB := true
 
 LOCAL_PATH := device/samsung/gtexslte
 TARGET_ARCH := arm
