@@ -1,3 +1,9 @@
+allow rild media_rw_data_file:dir { open read search };
+allow rild mnt_user_file:dir search;
+allow rild mnt_user_file:lnk_file read;
+allow rild storage_file:dir search;
+allow rild storage_file:lnk_file read;
+
 allow rild proc_net:file write;
 allow rild system_data_file:dir { create write add_name remove_name};
 allow rild ctl_default_prop:property_service set;
