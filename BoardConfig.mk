@@ -15,10 +15,6 @@ BOARD_VENDOR := samsung
 ARCH_ARM_HAVE_TLS_REGISTER := true
 TARGET_BOOTLOADER_BOARD_NAME := 8830
 
-BOARD_KERNEL_CMDLINE := console=ttyS1,115200n8
-BOARD_KERNEL_BASE := 0
-BOARD_KERNEL_PAGESIZE := 2048
-
 #rild
 BOARD_PROVIDES_RILD := true
 BOARD_PROVIDES_LIBRIL := true
@@ -107,33 +103,24 @@ WIFI_DRIVER_FW_PATH_AP      := "ap_mode"
 WIFI_DRIVER_MODULE_PATH     := "/lib/modules/sprdwl.ko"
 WIFI_DRIVER_MODULE_NAME     := "sprdwl"
 
-# TARGET_PREBUILT_KERNEL := kernel/samsung/gtexslte/arch/arm/boot/zImage
-
 # Charger
 BOARD_CHARGER_ENABLE_SUSPEND := true
 BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/power_supply/battery/batt_lp_charging
 
 # Integrated kernel building configs
-
+# BOARD_KERNEL_CMDLINE will be ignored when CONFIG_CMDLINE_FROM_BOOTLOADER=y in defconfig
+# BOARD_KERNEL_CMDLINE := console=ttyS1,115200n8
+# BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
+BOARD_KERNEL_BASE := 0x00000000
+BOARD_KERNEL_PAGESIZE := 2048
 TARGET_KERNEL_SOURCE := kernel/samsung/gtexslte
 TARGET_KERNEL_CONFIG := gtexslte_defconfig
 TARGET_VARIANT_CONFIG := gtexslte_defconfig
 TARGET_SELINUX_CONFIG := gtexslte_defconfig
-TARGET_KERNEL_CROSS_COMPILE_PREFIX := arm-linux-androideabi-
-# BOARD_MKBOOTIMG_ARGS := --base 0 --pagesize 2048
+TARGET_RECOVERY_CONFIG := gtexslte_twrp_defconfig
+BOARD_KERNEL_SEPARATED_DT := true
+BOARD_MKBOOTIMG_ARGS := --base 0 --pagesize 2048 --kernel_offset 0x00008000 --ramdisk_offset 0x01000000 --tags_offset 0x00000100
 BOARD_CUSTOM_BOOTIMG_MK := $(LOCAL_PATH)/mkbootimg.mk
-
-# #
-SC9830_MODULES:
-	mkdir -p $(PRODUCT_OUT)/root/lib/modules
-	mkdir -p $(PRODUCT_OUT)/recovery/root/lib/modules
-	make -C $(TARGET_KERNEL_SOURCE)/external_module/wifi KDIR=$(KERNEL_OUT) clean
-	make -C $(TARGET_KERNEL_SOURCE)/external_module/wifi KDIR=$(KERNEL_OUT)
-	cp $(TARGET_KERNEL_SOURCE)/external_module/wifi/*.ko $(PRODUCT_OUT)/root/lib/modules
-	cp $(TARGET_KERNEL_SOURCE)/external_module/wifi/*.ko $(PRODUCT_OUT)/recovery/root/lib/modules
-	find -L ${KERNEL_OUT}/drivers -name "*.ko" -exec cp -f {} $(PRODUCT_OUT)/root/lib/modules \;
-
-TARGET_KERNEL_MODULES := SC9830_MODULES
 
 # Enable WEBGL in WebKit
 ENABLE_WEBGL := true
@@ -233,11 +220,26 @@ TARGET_BOARD_BACK_CAMERA_MIPI := phya
 TARGET_BOARD_FRONT_CAMERA_CCIR_PCLK := source0
 TARGET_BOARD_BACK_CAMERA_CCIR_PCLK := source0
 
-
 # misc
 TARGET_HAS_BACKLIT_KEYS := false
 
-# RECOVERY_VARIANT := twrp
+# Build system
+USE_NINJA := false
+
+# Use dmalloc() for such low memory devices like us
+MALLOC_SVELTE := true
+BOARD_USES_LEGACY_MMAP := true
+
+# Bionic
+TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS := true
+
+# SELinux
+SERVICES_WITHOUT_SELINUX_DOMAIN := true
+
+################################################
+# TWRP specific build flags
+
+#RECOVERY_VARIANT := twrp
 
 TW_THEME := portrait_hdpi
 TW_HAS_DOWNLOAD_MODE := true
@@ -258,16 +260,9 @@ BOARD_HAS_NO_SELECT_BUTTON := true
 
 # Encryption support
 TW_INCLUDE_CRYPTO := true
+# TW_INCLUDE_CRYPTO_SAMSUNG := true
+# TARGET_HW_DISK_ENCRYPTION := true
 
-# Build system
-USE_NINJA := false
-
-# Use dmalloc() for such low memory devices like us
-MALLOC_SVELTE := true
-BOARD_USES_LEGACY_MMAP := true
-
-# Bionic
-TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS := true
-
-# SELinux
-SERVICES_WITHOUT_SELINUX_DOMAIN := true
+# Debug flags
+# TWRP_INCLUDE_LOGCAT := true
+# TARGET_USES_LOGD := true
