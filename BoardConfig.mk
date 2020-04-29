@@ -248,9 +248,19 @@ TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS := true
 SERVICES_WITHOUT_SELINUX_DOMAIN := true
 
 ################################################
-# TWRP specific build flags
+# CUSTOM RECOVERY - COMMONS
+#
+# requires: <custom-recovery>_gtexslte.mk to build properly
+# e.g. shrp_gtexslte.mk, twrp_gtexslte.mk
 
-#RECOVERY_VARIANT := twrp
+PRODUCT_IDENT := $(TARGET_PRODUCT:_gtexslte=)
+
+ifneq ($(filter lineage, $(PRODUCT_IDENT)),)
+TARGET_RECOVERY_FSTAB := device/samsung/gtexslte/recovery.fstab
+endif
+
+################################################
+# TWRP + common custom recovery build flags
 
 TW_THEME := portrait_hdpi
 TW_HAS_DOWNLOAD_MODE := true
@@ -260,7 +270,6 @@ TW_BRIGHTNESS_PATH := "/sys/devices/gen-panel-backlight.29/backlight/panel/brigh
 TW_MAX_BRIGHTNESS := 255
 TW_DEFAULT_BRIGHTNESS := 162
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/20200000.usb/gadget/lun0/file"
-TARGET_RECOVERY_FSTAB = device/samsung/gtexslte/twrp.fstab
 TARGET_RECOVERY_PIXEL_FORMAT := "ABGR_8888"
 RECOVERY_GRAPHICS_FORCE_USE_LINELENGTH := true
 RECOVERY_GRAPHICS_FORCE_SINGLE_BUFFER := true
@@ -268,6 +277,7 @@ RECOVERY_SDCARD_ON_DATA := true
 BOARD_HAS_NO_MISC_PARTITION := true
 BOARD_HAS_FLIPPED_SCREEN := true
 BOARD_HAS_NO_SELECT_BUTTON := true
+#TW_CUSTOM_BATTERY_PATH := /sys/devices/sec-battery.4/power_supply/battery
 
 # Encryption support
 TW_INCLUDE_CRYPTO := true

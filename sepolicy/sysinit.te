@@ -1,1 +1,3 @@
-allow sysinit kernel:system module_request;
+userdebug(`
+    allow sysinit kernel:system module_request;
+')

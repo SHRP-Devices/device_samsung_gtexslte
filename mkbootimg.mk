@@ -9,7 +9,9 @@ TARGET_CUSTOM_DTBTOOL := $(TARGET_KERNEL_SOURCE)/scripts/mkdtimg.sh
 INSTALLED_DTIMAGE_TARGET := $(PRODUCT_OUT)/dt.img
 
 # ODIN pkg for TWRP
-FLASH_IMAGE_TARGET ?= $(PRODUCT_OUT)/twrp_odin.tar
+TWRP_METAPATH := $(LOCAL_PATH)/recovery_zip/META-INF
+BDATE := $(shell date +%F)
+FLASH_IMAGE_TARGET ?= $(PRODUCT_OUT)/$(TARGET_PRODUCT)_$(BDATE)
 
 DTS_FILES := .sprd-scx35l_sharkls_gtexslte_rev00.dtb.dts .sprd-scx35l_sharkls_gtexslte_rev01.dtb.dts .sprd-scx35l_sharkls_gtexslte_rev02.dtb.dts .sprd-scx35l_sharkls_gtexslte_rev03.dtb.dts
 
@@ -43,9 +45,14 @@ $(INSTALLED_RECOVERYIMAGE_TARGET): $(MKBOOTIMG) $(INSTALLED_DTIMAGE_TARGET) \
 	@echo -e ${CL_CYN}"----- Making recovery image ------"${CL_RST}
 	$(hide) $(MKBOOTIMG) $(INTERNAL_RECOVERYIMAGE_ARGS) $(BOARD_MKBOOTIMG_ARGS) --output $@
 	$(hide) $(call assert-max-image-size,$@,$(BOARD_RECOVERYIMAGE_PARTITION_SIZE),raw)
-	@echo -e ${CL_CYN}"Made recovery image: $@"${CL_RST}
 	@echo -e ${CL_GRN}"----- faking selinux state for Samsung bootloader ------"${CL_RST}
 	$(hide) echo -n "SEANDROIDENFORCE" >> $(INSTALLED_RECOVERYIMAGE_TARGET)
-	$(hide) tar -C $(PRODUCT_OUT) -H ustar -c recovery.img > $(FLASH_IMAGE_TARGET)
-	@echo -e ${CL_CYN}"Made Odin flashable recovery tar: ${FLASH_IMAGE_TARGET}"${CL_RST}
- 
+	$(hide) cp $(PRODUCT_OUT)/recovery.img $(FLASH_IMAGE_TARGET).img
+	$(hide) tar -C $(PRODUCT_OUT) -H ustar -c recovery.img > $(FLASH_IMAGE_TARGET)_odin.tar
+	$(hide) cp -a $(TWRP_METAPATH) $(PRODUCT_OUT) && cd $(PRODUCT_OUT) && zip -r9 ${FLASH_IMAGE_TARGET}.zip recovery.img META-INF
+	@echo -e ${CL_GRN}"----- Recovery images finished ------"${CL_RST}
+	@echo -e ${CL_CYN}"  * $(TARGET_PRODUCT) image:\t\t$(FLASH_IMAGE_TARGET).img"${CL_RST}
+	@echo -e ${CL_CYN}"  * Recovery for Odin:\t\t\t${FLASH_IMAGE_TARGET}_ODIN.tar"${CL_RST}
+	@echo -e ${CL_CYN}"  * Recovery image:\t\t\t$@"${CL_RST}
+	@echo -e ${CL_CYN}"  * Recovery as flashable recovery zip:\t${FLASH_IMAGE_TARGET}.zip"${CL_RST}
+	@echo -e ${CL_GRN}"----- Recovery images finished ------"${CL_RST}

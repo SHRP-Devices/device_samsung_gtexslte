@@ -1,2 +1,2 @@
-add_lunch_combo lineage_gtexslte-userdebug
-add_lunch_combo lineage_gtexslte-eng
+add_lunch_combo twrp_gtexslte-eng
+add_lunch_combo shrp_gtexslte-eng

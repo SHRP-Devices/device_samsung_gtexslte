@@ -1,3 +1,6 @@
+# fixes: system/sepolicy/untrusted_app.te:210:ERROR 'unknown type exfat'
+type exfat, sdcard_type, fs_type, mlstrustedobject;
+type ntfs, sdcard_type, fs_type, mlstrustedobject;
 type prod_file, file_type;
 type wifi_efs_file, file_type;
 type app_efs_file, file_type;

@@ -1,0 +1,17 @@
+ui_print("");
+ui_print("=========================================");
+ui_print("=                                       =");
+ui_print("=    steadfasterX's RECOVERY flasher    =");
+ui_print("=                                       =");
+ui_print("=========================================");
+ui_print("");
+ui_print("          ..installing the magic..       ");
+ui_print("              ..please wait..            ");
+ui_print("");
+
+ui_print("Flashing recovery ...");
+package_extract_file("recovery.img", "/dev/block/platform/sdio_emmc/by-name/RECOVERY");
+
+ui_print("");
+ui_print("      ..done ! now reboot and ENJOY !    ");
+ui_print("");
