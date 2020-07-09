@@ -58,3 +58,6 @@ SHRP_REC := /dev/block/platform/sdio_emmc/by-name/RECOVERY
 SHRP_REC_TYPE := normal
 # Recovery Type (It can be A/B or A_only) [Only for About Section]
 SHRP_DEVICE_TYPE := A_Only
+# shrink size
+LZMA_RAMDISK_TARGETS := recovery
+LZMA_COMPRESSION := -9
