@@ -31,7 +31,6 @@ PRODUCT_COPY_FILES += \
 
 TARGET_RECOVERY_FSTAB := device/samsung/gtexslte/twrp.fstab
 
-SHRP_EXPRESS := true
 # Path of your SHRP Tree
 SHRP_PATH := device/samsung/gtexslte
 # Maintainer name
@@ -58,6 +57,13 @@ SHRP_REC := /dev/block/platform/sdio_emmc/by-name/RECOVERY
 SHRP_REC_TYPE := normal
 # Recovery Type (It can be A/B or A_only) [Only for About Section]
 SHRP_DEVICE_TYPE := A_Only
+
 # shrink size
-LZMA_RAMDISK_TARGETS := recovery
-LZMA_COMPRESSION := -9
+SHRP_LITE := true
+SHRP_SKIP_DEFAULT_ADDON_1 := true
+SHRP_SKIP_DEFAULT_ADDON_2 := true
+SHRP_SKIP_DEFAULT_ADDON_3 := true
+SHRP_SKIP_DEFAULT_ADDON_4 := true
+# DO NOT USE (fails to boot):
+#LZMA_RAMDISK_TARGETS := recovery
+#LZMA_COMPRESSION := -9
