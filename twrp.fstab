@@ -9,6 +9,7 @@
 /system_image   emmc      	/dev/block/platform/sdio_emmc/by-name/SYSTEM
 /cache_image    emmc      	/dev/block/platform/sdio_emmc/by-name/CACHE
 /hidden_image   emmc     	/dev/block/platform/sdio_emmc/by-name/HIDDEN
+/misc   emmc    /dev/block/platform/sdio_emmc/by-name/FOTA_SIG
 
 /external_sd	vfat           	/dev/block/mmcblk1p1	/dev/block/mmcblk1	flags=display="Micro SDcard";storage;wipeingui;removable
 /usb-otg        vfat       	/dev/block/sdd1		/dev/block/sda		flags=display="USB-OTG";storage;wipeingui;removable
