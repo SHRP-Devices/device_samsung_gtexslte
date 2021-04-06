@@ -37,7 +37,7 @@ SHRP_PATH := device/samsung/gtexslte
 # Maintainer name
 SHRP_MAINTAINER := steadfasterX
 # Device codename
-SHRP_DEVICE_CODE := gtexslte
+SHRP_DEVICE_CODE := $(PRODUCT_DEVICE)
 # put this 0 if device has no EDL mode
 SHRP_EDL_MODE := 0
 SHRP_EXTERNAL := /external_sd
@@ -70,5 +70,6 @@ SHRP_SKIP_DEFAULT_ADDON_4 := true
 #LZMA_RAMDISK_TARGETS := recovery
 #LZMA_COMPRESSION := -9
 TW_EXCLUDE_NANO := true
+TW_EXCLUDE_BASH := true
 TW_EXCLUDE_ENCRYPTED_BACKUPS := true
 #TW_EXCLUDE_MTP := true
