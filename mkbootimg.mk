@@ -44,17 +44,17 @@ $(INSTALLED_RECOVERYIMAGE_TARGET): $(MKBOOTIMG) $(INSTALLED_DTIMAGE_TARGET) \
 	@echo -e ${CL_CYN}"###############################################################"${CL_RST}
 	@echo -e ${CL_CYN}"----- Shrinking recovery image ------"${CL_RST}
 	@echo -e ${CL_CYN}"###############################################################"${CL_RST}
-	#$(LOCAL_PATH)/shrink.sh "$(PRODUCT_OUT)/recovery/root/twres/images"
-	#$(LOCAL_PATH)/shrink.sh "$(PRODUCT_OUT)/recovery/root/twres/themeResources" # <--- causes glitched nav bar
-	#$(LOCAL_PATH)/shrink.sh "$(PRODUCT_OUT)/recovery/root/twres/themeResources/accentResources/" # <-- causes glitched nav bar
-	@rm -vr $(PRODUCT_OUT)/recovery/root/twres/themeResources/accentResources/pink/*
-	@rm -vr $(PRODUCT_OUT)/recovery/root/twres/themeResources/accentResources/rpink/*
-	@rm -vr $(PRODUCT_OUT)/recovery/root/twres/themeResources/accentResources/red
-	@rm -vr $(PRODUCT_OUT)/recovery/root/twres/themeResources/accentResources/lred
-	@rm -vr $(PRODUCT_OUT)/recovery/root/twres/themeResources/accentResources/indigo/*
-	@rm -vr $(PRODUCT_OUT)/recovery/root/twres/themeResources/accentResources/brown
-	@rm -vr $(PRODUCT_OUT)/recovery/root/twres/themeResources/accentResources/teal
-	@rm -v $(PRODUCT_OUT)/ramdisk-recovery.img
+	$(hide) #$(LOCAL_PATH)/shrink.sh "$(PRODUCT_OUT)/recovery/root/twres/images"
+	$(hide) #$(LOCAL_PATH)/shrink.sh "$(PRODUCT_OUT)/recovery/root/twres/themeResources" # <--- causes glitched nav bar
+	$(hide) #$(LOCAL_PATH)/shrink.sh "$(PRODUCT_OUT)/recovery/root/twres/themeResources/accentResources/" # <-- causes glitched nav bar
+	$(hide) rm -r $(PRODUCT_OUT)/recovery/root/twres/themeResources/accentResources/pink/*
+	$(hide) rm -r $(PRODUCT_OUT)/recovery/root/twres/themeResources/accentResources/rpink/*
+	$(hide) rm -r $(PRODUCT_OUT)/recovery/root/twres/themeResources/accentResources/red
+	$(hide) rm -r $(PRODUCT_OUT)/recovery/root/twres/themeResources/accentResources/lred
+	$(hide) rm -r $(PRODUCT_OUT)/recovery/root/twres/themeResources/accentResources/indigo/*
+	$(hide) rm -r $(PRODUCT_OUT)/recovery/root/twres/themeResources/accentResources/brown
+	$(hide) rm -r $(PRODUCT_OUT)/recovery/root/twres/themeResources/accentResources/teal
+	$(hide) rm $(PRODUCT_OUT)/ramdisk-recovery.img
 	@echo -e ${CL_CYN}"###############################################################"${CL_RST}
 	@echo -e ${CL_CYN}"----- Making recovery image (again) ------"${CL_RST}
 	@echo -e ${CL_CYN}"###############################################################"${CL_RST}
