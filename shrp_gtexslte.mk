@@ -38,6 +38,8 @@ SHRP_PATH := device/samsung/gtexslte
 SHRP_MAINTAINER := steadfasterX
 # Device codename
 SHRP_DEVICE_CODE := $(PRODUCT_DEVICE)
+# SHRP state
+SHRP_OFFICIAL := true
 # put this 0 if device has no EDL mode
 SHRP_EDL_MODE := 0
 SHRP_EXTERNAL := /external_sd
